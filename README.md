@@ -37,7 +37,7 @@ git push
 
 Клонируйте репозиторий и перейдите в него в командной строке:
 ```
-git clone https://github.com/needred/foodgram-project-react.git
+git clone https://github.com/MaidariTs/foodgram-project-react
 cd backend
 ```
 Создайте и активируйте виртуальное окружение, обновите pip:

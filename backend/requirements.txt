@@ -2,7 +2,7 @@ asgiref==3.2.10
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.12
-conda==4.3.16
+# conda==4.3.16
 coreapi==2.3.3
 coreschema==0.0.4
 cryptography==36.0.1
@@ -30,9 +30,10 @@ oauthlib==3.2.0
 Pillow==8.4.0
 pipenv==2022.1.8
 platformdirs==2.5.0
-psycopg2-binary==2.8.6
+# psycopg2-binary==2.8.6
+psycopg2-binary
 pycodestyle==2.8.0
-pycosat==0.6.3
+# pycosat==0.6.3
 pycparser==2.21
 pyflakes==2.4.0
 PyJWT==2.3.0

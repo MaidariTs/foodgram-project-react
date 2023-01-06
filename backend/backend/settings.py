@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv(
     'SECRET_KEY',
-    default='7aw@i5xkl!ks!^jjcf(mbqai^3-iq2s4oa&kb*igp_p$xet1g%'
+    default=r'7aw@i5xkl!ks!^jjcf(mbqai^3-iq2s4oa&kb*igp_p$xet1g%'
 )
 
 DEBUG = False

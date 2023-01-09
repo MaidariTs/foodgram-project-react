@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv(
     default='django-insecure-kialwu9o(&-+_7vo%f@wzda=(rj_^0w)v8bb!h!38d1l8**e^t'
 )
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -119,7 +119,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/back_static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "back_static")
+STATIC_ROOT = os.path.join(BASE_DIR, "back_static/")
 
 # static_path = Path('../docs')
 # STATICFILES_DIRS = [
@@ -127,7 +127,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "back_static")
 # ]
 
 MEDIA_URL = '/back_media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

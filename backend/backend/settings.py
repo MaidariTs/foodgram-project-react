@@ -10,9 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv(
     'SECRET_KEY',
-    default='7aw@i5xkl!ks!^jjcf(mbqai^3-iq2s4oa&kb*igp_p$xet1g%'
-    # Экранирование кавычек, восклицательных знаков и тд с помощью двойных кавычек
-    # "7aw""@i5xkl!ks""!""^jjcf""(""mbqai^3-iq2s4oa&kb*igp_p""$""xet1g%"
+    default='django-insecure-kialwu9o(&-+_7vo%f@wzda=(rj_^0w)v8bb!h!38d1l8**e^t'
 )
 
 DEBUG = False
@@ -79,7 +77,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
-# SQLite3
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,12 +84,9 @@ DATABASES = {
     }
 }
 
-
-# postgresql:
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql_psycopg2'),
+#         'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
 #         'NAME': os.getenv('DB_NAME', default='postgres'),
 #         'USER': os.getenv('POSTGRES_USER', default='postgres'),
 #         'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
@@ -124,16 +118,16 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "/backend_static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "backend_static")
+STATIC_URL = "/back_static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "back_static")
 
 # static_path = Path('../docs')
 # STATICFILES_DIRS = [
 #     static_path,
 # ]
 
-MEDIA_URL = '/backend_media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'backend_media')
+MEDIA_URL = '/back_media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

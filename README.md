@@ -42,7 +42,7 @@ DB_PORT=5432
 
 * Запустить файл docker-copmose.yml
 ```
-docker-compose up -d build
+docker-compose up -d --build
 ```
 * Применить миграции:
 ```
@@ -65,8 +65,9 @@ docker-compose exec backend python manage.py createsuperuser
 docker-compose exec backend python manage.py collectstatic --noinput
 ```
 
-## Готово! Проект доступен по ссылке:
+## Готово! Документация к проекту по ссылке:
 ```
+http://127.0.0.1/api/docs/
 ```
 
 ## Backend by

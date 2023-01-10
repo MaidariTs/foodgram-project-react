@@ -46,10 +46,10 @@ def download_cart(list_ing):
     c.drawString(30, 775, 'Foodgram')
 
     c.setFont(sans_regular_name, 20)
-    c.drawString(30, 740, 'Ваш продуктовый помошник')
+    c.drawString(30, 740, 'Ваш продуктовый помощник')
     c.line(30, 730, 580, 730)
 
-    c.drawString(30, 710, 'Список покупок')
+    c.drawString(30, 710, 'Список покупок:')
     val = 680
     for step, ing in enumerate(list_ing):
         ingredient = list(ing.values())

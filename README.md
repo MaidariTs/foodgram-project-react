@@ -1,7 +1,6 @@
 # Foodgram - Продуктовый помощник
 
-Foodgram это ресурс для публикации рецептов.  
-Пользователи могут создавать свои рецепты, читать рецепты других пользователей, подписываться на интересных авторов, добавлять лучшие рецепты в избранное, а также создавать список покупок и загружать его в pdf формате
+«Foodgram»: сайт, на котором пользователи могут публиковать рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Сервис «Список покупок» позволит пользователям создавать список продуктов, которые нужно купить для приготовления выбранных блюд и загружать список в pdf формате.
 
 ## Инструкция по установке проекта локально
 
@@ -28,39 +27,46 @@ python -m venv venv
 python -m pip install --upgrade pip
 ```
 
-* Установить зависимости:
-
+* В директории 'infra/' необходимо создать файл '.env' и заполнить его:
+cd ..
+cd infra/
 ```
-cd backend/
-pip install -r requirements.txt
+SECRET_KEY=<Секретный ключ Django> (в кавычках)
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
 ```
 
+* Запустить файл docker-copmose.yml
+```
+docker-compose up -d build
+```
 * Применить миграции:
 ```
-python manage.py makemigrations
+docker-compose exec backend python manage.py migrate
 ```
+* Загрузить ингредиенты из файла в БД:
 ```
-python manage.py migrate
+docker-compose exec backend python manage.py load_ingredients
 ```
-* Загрузить ингредиенты:
+* Загрузить тэги из файла в БД:
 ```
-python manage.py load_ingredients
+docker-compose exec backend python manage.py load_tags
 ```
-* Загрузить теги:
+* Создайть суперюзера:
 ```
-python manage.py load_tags
-```
-* Создать администратора:
-```
-python manage.py createsuperuser
+docker-compose exec backend python manage.py createsuperuser
 ```
 * Собрать статику:
 ```
-python manage.py collectstatic --noinput
+docker-compose exec backend python manage.py collectstatic --noinput
 ```
-* Запустить сервер:
+
+## Готово! Проект доступен по ссылке:
 ```
-python manage.py runserver
 ```
 
 ## Backend by

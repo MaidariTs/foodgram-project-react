@@ -25,6 +25,7 @@ class AmountSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='ingredient.name')
     measurement_unit = serializers.CharField(
         source='ingredient.measurement_unit')
+
     class Meta:
         model = Amount
         fields = ('id', 'name', 'measurement_unit', 'amount')
@@ -37,8 +38,7 @@ class IngredientAmountSerializer(serializers.Serializer):
     def validate_amount(self, value):
         if value <= 0:
             raise serializers.ValidationError(
-                'Количесто ингредиента не может быть меньше отрицательным'
-            )
+                'Исправьте количество ингридиента')
         return value
 
 
@@ -54,10 +54,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = (
             'id',
+            'name',
             'tags',
             'author',
             'ingredients',
-            'name',
             'image',
             'text',
             'cooking_time',
@@ -147,6 +147,7 @@ class FollowListSerializer(serializers.ModelSerializer):
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
     is_subscribed = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = (
@@ -204,7 +205,9 @@ class FollowSerializer(serializers.ModelSerializer):
         user = request.user
         author = data.get('author')
         if Follow.objects.filter(user=user, author=author):
-            raise serializers.ValidationError('Вы уже подписаны на этого пользователя')
+            raise serializers.ValidationError(
+                'Вы уже подписаны на этого пользователя'
+            )
         if user == author:
             raise serializers.ValidationError(
                 'Вы не можете подписаться на самого себя'

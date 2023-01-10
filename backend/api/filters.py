@@ -5,14 +5,11 @@ from recipes.models import Ingredient, Recipe
 
 class RecipeFilter(rest_framework.FilterSet):
     tags = django_filters.AllValuesMultipleFilter(
-        field_name='tags__slug'
-    )
+        field_name='tags__slug')
     is_favorited = django_filters.NumberFilter(
-        method='get_is_favorited'
-    )
+        method='get_is_favorited')
     is_in_shopping_cart = django_filters.NumberFilter(
-        method='get_is_shopping_cart'
-    )
+        method='get_is_shopping_cart')
 
     class Meta:
         model = Recipe
@@ -34,8 +31,8 @@ class RecipeFilter(rest_framework.FilterSet):
 class IngredientFilter(rest_framework.FilterSet):
     name = django_filters.CharFilter(
         field_name='name',
-        lookup_expr='istartswith'
-    )
+        lookup_expr='istartswith')
+
     class Meta:
         model = Ingredient
         fields = ('name',)

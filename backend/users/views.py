@@ -15,6 +15,7 @@ User = get_user_model()
 class UsersViewSet(UserViewSet):
     pagination_class = CustomPagination
     serializer_class = UsersSerializer
+
     @action(
         detail=False,
         methods=['get'],
@@ -28,12 +29,14 @@ class UsersViewSet(UserViewSet):
             serializer = FollowListSerializer(
                 pages,
                 many=True,
-                context={'request': request})
+                context={'request': request}
+            )
             return self.get_paginated_response(serializer.data)
         return Response(
-            'Нет подписок',
+            'У вас нет подписок',
             status=status.HTTP_400_BAD_REQUEST
         )
+
     @action(
         detail=True,
         methods=['post', 'delete'],
@@ -45,10 +48,7 @@ class UsersViewSet(UserViewSet):
         author = get_object_or_404(User, id=id)
         if request.method == 'POST':
             context = {'request': request}
-            data = {
-                'user': user.id,
-                'author': author.id
-            }
+            data = {'user': user.id, 'author': author.id}
             serializer = FollowSerializer(data=data, context=context)
             serializer.is_valid(raise_exception=True)
             serializer.save()

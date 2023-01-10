@@ -1,29 +1,23 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-env_path = Path('../infra') / '.env'
-load_dotenv(dotenv_path=env_path)
-
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv(
-    'SECRET_KEY',
-    default='django-insecure-kialwu9o(&-+_7vo%f@wzda=(rj_^0w)v8bb!h!38d1l8**e^t'
-)
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', default='3cm87a6zrg_e8r3)$%vp6+rd9sf*3+5!azb3jys)3y)=#v#e7_')
+
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://*localhost',
-    'https://*localhost',
-    'http://*project-foodgram.ddns.net',
-    'https://*project-foodgram.ddns.net',
-]
-
+CSRF_TRUSTED_ORIGINS = ['*']
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,26 +26,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # <-- my app -->
+    'users.apps.UsersConfig',
+    'recipes.apps.RecipesConfig',
+    'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_filters',
+    'colorfield',
     'corsheaders',
     'djoser',
-    'recipes',
-    'users',
-    'api',
+    'django_filters'
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_URLS_REGEX = r'^/api/.*$'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -74,8 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_URLS_REGEX = r'^/api/.*$'
+
+# Database
 
 DATABASES = {
     'default': {
@@ -95,6 +98,9 @@ DATABASES = {
 #     }
 # }
 
+# Password validation
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,7 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+
+# Internationalization
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -118,43 +128,56 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "/back_static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "back_static/")
 
-# static_path = Path('../docs')
-# STATICFILES_DIRS = [
-#     static_path,
-# ]
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-MEDIA_URL = '/back_media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media/')
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 6
+    ],
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 6,
+
 }
 
 DJOSER = {
-    "LOGIN_FIELD": 'email',
-    "SEND_ACTIVATION_EMAIL": False,
-    'HIDE_USERS': False,
-    "SERIALIZERS": {
-        "user_create": "users.serializers.CustomUserCreateSerializer",
-        "user": "users.serializers.CustomUserSerializer",
-        "current_user": "users.serializers.CustomUserSerializer",
+    'SERIALIZERS': {
+        'user_list': 'users.serializers.UsersSerializer',
+        'user': 'users.serializers.UsersSerializer',
+        'current_user': 'users.serializers.UsersSerializer',
     },
     'PERMISSIONS': {
-        'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
-        'user_list': ['rest_framework.permissions.AllowAny']
+        'activation': ['rest_framework.permissions.AllowAny'],
+        'password_reset': ['rest_framework.permissions.IsAdminUser'],
+        'password_reset_confirm': ['rest_framework.permissions.IsAdminUser'],
+        'set_password': ['rest_framework.permissions.IsAuthenticated'],
+        'username_reset': ['rest_framework.permissions.IsAdminUser'],
+        'username_reset_confirm': ['rest_framework.permissions.IsAdminUser'],
+        'set_username': ['rest_framework.permissions.IsAdminUser'],
+        'user_create': ['rest_framework.permissions.AllowAny'],
+        'user_delete': ['rest_framework.permissions.IsAdminUser'],
+        'user': ['rest_framework.permissions.IsAuthenticated'],
+        'current_user': ['rest_framework.permissions.IsAuthenticated'],
+        'user_list': ['rest_framework.permissions.IsAuthenticated'],
+        'token_create': ['rest_framework.permissions.AllowAny'],
+        'token_destroy': ['rest_framework.permissions.IsAuthenticated'],
     },
+    'HIDE_USERS': False,
 }
-
-AUTH_USER_MODEL = 'users.User'

@@ -1,6 +1,8 @@
-from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
+
+from colorfield.fields import ColorField
 
 User = get_user_model()
 
@@ -62,7 +64,8 @@ class Recipe(models.Model):
         default=None
     )
     cooking_time = models.PositiveSmallIntegerField(
-        verbose_name='Время приготовления в минутах'
+        verbose_name='Время приготовления в минутах',
+        validators=[MinValueValidator(1)]
     )
     tags = models.ManyToManyField(
         Tag,
@@ -91,7 +94,8 @@ class Recipe(models.Model):
 
 class Amount(models.Model):
     amount = models.PositiveIntegerField(
-        verbose_name='Количество'
+        verbose_name='Количество',
+        validators=[MinValueValidator(1)]
     )
     ingredient = models.ForeignKey(
         Ingredient,

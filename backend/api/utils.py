@@ -1,12 +1,16 @@
 import io
+
 from django.conf import settings
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
+
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+
 from rest_framework import status
 from rest_framework.response import Response
+
 from api.serializers import FavoriteSerializer
 from recipes.models import Recipe
 

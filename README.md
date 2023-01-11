@@ -31,6 +31,7 @@ python -m pip install --upgrade pip
 cd ..
 cd infra/
 ```
+ALLOWED_HOSTS='*'
 SECRET_KEY=<Секретный ключ Django> (в кавычках)
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
@@ -64,6 +65,14 @@ docker-compose exec backend python manage.py createsuperuser
 ```
 docker-compose exec backend python manage.py collectstatic --noinput
 ```
+
+
+scp docker-compose.yml <username>@<host>/home/<username>/docker-compose.yaml
+sudo mkdir nginx
+scp nginx.conf <username>@<host>/home/<username>/nginx/default.conf
+
+
+
 
 ## Готово! Документация к проекту по ссылке:
 ```

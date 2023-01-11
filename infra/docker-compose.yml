@@ -9,8 +9,8 @@ services:
       - ./.env
   
   backend:
-    # image: maidaritsydenov/foodgram_backend:latest
-    build: ../backend
+    image: maidaritsydenov/foodgram_backend:latest
+    # build: ../backend
     restart: always
     volumes:
       - static_value:/app/static/
@@ -21,8 +21,8 @@ services:
       - ./.env
 
   frontend:
-    # image: maidaritsydenov/foodgram_frontend:latest
-    build: ../frontend
+    image: maidaritsydenov/foodgram_frontend:latest
+    # build: ../frontend
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:

@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='3cm87a6zrg_e8r3)$%vp6+rd9sf*3+5!az
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', default='*')]
 
 CSRF_TRUSTED_ORIGINS = ['*']
 # Application definition

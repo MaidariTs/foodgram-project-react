@@ -66,23 +66,98 @@ docker-compose exec backend python manage.py createsuperuser
 docker-compose exec backend python manage.py collectstatic --noinput
 ```
 
+## Инструкция по установке проекта на сервер
 
+* Форкнуть репозиторий к себе на GitHub https://github.com/MaidariTs/foodgram-project-react.git
+
+* Склонировать репозиторий:
+
+```
+git clone https://github.com/<YOUR_GITHUB_NICKNAME>/foodgram-project-react.git
+cd foodgram-project-react
+```
+
+* Репозиторий **foodgram-project-react.git >> Settings >> Secrets and variables > Actions**
+* Указать следующие переменные:
+
+**.env**
+- ```SECRET_KEY``` - секретный ключ от django
+- ```ALLOWED_HOSTS``` - список разрешенных адресов (default='*')
+
+**DOCKER**
+- ```DOCKER_USERNAME``` - никнейм в DockerHub
+- ```DOCKER_PASSWORD``` - пароль от DockerHub
+
+**SERVER**
+- ```HOST``` - публичный IPv4 сервера
+- ```USER``` - никнейм пользователя
+- ```SSH_KEY``` - приватный ssh ключ (cat ~/.ssh/id_rsa)
+- ```PASSPHRASE``` - кодовая фраза для ssh-ключа
+
+**DB**
+- ```DB_ENGINE``` - django.db.backends.postgresql
+- ```DB_NAME``` - postgres
+- ```POSTGRES_USER``` - postgres
+- ```POSTGRES_PASSWORD``` - postgres
+- ```DB_HOST``` - db
+- ```DB_PORT``` - 5432
+
+**TELEGRAM**
+- ```TELEGRAM_TO``` - id от телеграмм аккаунта
+- ```TELEGRAM_TOKEN``` - токен бота
+
+* Перейти в папку /infra
+```
+cd infra/
+```
+
+* В строке server_name заменить IPv4 на свой
+
+* Передать файлы docker-compose.yml и nginx.conf на свой сервер
+```
 scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
-
 scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
+```
 
-scp docker-compose.yml maidaritsydenov@51.250.9.252:/home/maidaritsydenov/docker-compose.yml
-scp nginx.conf maidaritsydenov@51.250.9.252:/home/maidaritsydenov/nginx.conf
+* Зайти на сервер
+```
+ssh username@server_address
+```
 
+* Обновить установленные пакеты:
+```
+sudo apt update
+sudo apt upgrade -y
+```
 
-docker-compose exec backend python manage.py collectstatic --no-input
+* Установить Docker и Docker-compose:
+```
+sudo apt install docker.io
+```
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
 
+* Выйти из сервера
+```
+exit
+```
 
+* Запушить изменения на GitHub
+```
+git add .
+git commit -m 'start'
+git push
+```
 
+## Всё. При пуше изменений на GitHub запустится workflow, который автоматически протестирует, загрузит на DockerHub образы и задеплоит на сервер
 
 ## Готово! Документация к проекту по ссылке:
 ```
-http://127.0.0.1/api/docs/
+http://<server_address>/api/docs/
 ```
 
 ## Backend by

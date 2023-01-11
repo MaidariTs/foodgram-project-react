@@ -75,6 +75,9 @@ scp docker-compose.yml maidaritsydenov@51.250.9.252:/home/maidaritsydenov/docker
 scp nginx.conf maidaritsydenov@51.250.9.252:/home/maidaritsydenov/nginx.conf
 
 
+docker-compose exec backend python manage.py collectstatic --no-input
+
+
 
 
 ## Готово! Документация к проекту по ссылке:

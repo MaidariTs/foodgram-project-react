@@ -67,9 +67,12 @@ docker-compose exec backend python manage.py collectstatic --noinput
 ```
 
 
-scp docker-compose.yml <username>@<host>/home/<username>/docker-compose.yaml
-sudo mkdir nginx
-scp nginx.conf <username>@<host>/home/<username>/nginx/default.conf
+scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
+
+scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
+
+scp docker-compose.yml maidaritsydenov@51.250.9.252:/home/maidaritsydenov/docker-compose.yml
+scp nginx.conf maidaritsydenov@51.250.9.252:/home/maidaritsydenov/nginx.conf
 
 
 
